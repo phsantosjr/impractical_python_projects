@@ -8,5 +8,3 @@ class TestPseudonymns:
         p = Pseudonymns()
         assert isinstance(p.total_names, int)
 
-
-
