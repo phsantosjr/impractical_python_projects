@@ -4,10 +4,12 @@ from dataclasses import dataclass, field
 from faker import Faker
 
 from ui.exceptions import ZeroOrLessNotAllowedException
+from ui.ui import UI
 
 
 @dataclass
 class Pseudonymns:
+    ui: UI
     first_names: list = field(default_factory=list)
     middle_names: list = field(default_factory=list)
     last_names: list = field(default_factory=list)
@@ -19,6 +21,7 @@ class Pseudonymns:
         if self.total_names <= 0:
             raise ZeroOrLessNotAllowedException
 
+        self.ui.print("Runnin pseudonyms")
         self.fake = Faker(self.language)
         self._load_first_names()
         self._load_middle_names()
@@ -42,24 +45,18 @@ class Pseudonymns:
     def get_last_name(self) -> str:
         return random.choice(self.last_names)
 
+    def main(self):
+        while True:
+            self.ui.clear()
+            first_name = self.get_first_name()
+            middle_name = self.get_middle_name()
+            last_name = self.get_last_name()
 
-def main():
-    pseudonyms = Pseudonymns()
+            self.ui.print_break_line()
+            self.ui.print(f"The name has been chosen was {first_name} {middle_name} {last_name}")
+            self.ui.print_break_line()
+            try_again = input("\n\nTry again? (Press Enter else n to quit)\n ")
+            if try_again.lower() == "n":
+                break
 
-    while True:
-        first_name = pseudonyms.get_first_name()
-        middle_name = pseudonyms.get_middle_name()
-        last_name = pseudonyms.get_last_name()
-
-        print("\n\n")
-        print(f"The name has been chosen was {first_name} {middle_name} {last_name}", file=sys.stderr)
-        print("\n\n")
-        try_again = input("\n\nTry again? (Press Enter else n to quit)\n ")
-        if try_again.lower() == "n":
-            break
-
-    input("\nPress Enter to exit.")
-
-
-if __name__ == "__main__":
-    main()
+        input("\nPress Enter to exit.")
