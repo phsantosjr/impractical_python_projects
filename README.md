@@ -59,3 +59,8 @@ If the word begins with a vowel, you simply add “way” to the end of the
 word. One of the most famous Pig Latin phrases of all time is “ixnay on the
 ottenray,” 
 > (Vaughan, Lee)
+
+#### Poor Man Bar Chart
+
+Simple chart for character count
+
